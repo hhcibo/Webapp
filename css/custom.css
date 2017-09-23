@@ -1,0 +1,27 @@
+/* Carousel */
+.carousel-indicators > li {
+  background: rgb(50, 50, 50);
+}
+
+.carousel-indicators > li.active {
+  background: rgb(0, 200, 0);
+}
+
+.carousel .carousel-control-prev-icon,
+.carousel .carousel-control-next-icon {
+  background: none;
+}
+
+#InformationCarousel .carousel-inner {
+  padding-bottom: 40px;
+}
+
+
+/* Rides List */
+.list-rides .card {
+  margin-top: 20px;
+}
+
+.list-rides .list-component {
+  display: inline;
+}

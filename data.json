@@ -1,0 +1,29 @@
+{
+	"currentTravel": {
+		"fromStation": "U Wedding",
+		"startTime": "2017-09-23 12:13:42",
+		"line": "U1"
+	},
+	"pastTravels": [{
+			"startTime": "2017-09-21 12:13:42",
+			"fromStation": "U Niemöllerplatz",
+			"endTime": "2017-09-21 12:13:42",
+			"endStation": "S Friedrichshain",
+			"cost": 1.45
+		},
+		{
+			"startTime": "2017-09-15 12:13:42",
+			"fromStation": "S Schulzendorf",
+			"endTime": "2017-09-15 12:13:42",
+			"endStation": "S Schönholz",
+			"cost": 2.4
+		},
+		{
+			"startTime": "2017-08-23 12:13:42",
+			"fromStation": "U Tegel",
+			"endTime": "2017-08-23 12:13:42",
+			"endStation": "U Borsigwerke",
+			"cost": 0.2
+		}
+	]
+}
