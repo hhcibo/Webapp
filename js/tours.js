@@ -40,13 +40,21 @@
     });
   }
 
+  // create Datetime from timestamp
+  function createDatetimeFromTimestamp(timestamp) {
+    var datetime = new Date(0);
+    datetime.setUTCSeconds(timestamp);
+    return datetime;
+  }
+
   // handle Response function
   function handleResponse(response) {
-    var travels = [response.currentTravel].concat(response.pastTravels);
+    var travels = response;
     var sortedByMonths = {};
 
     travels.forEach(function (item) {
-      var date = new Date(item.startTime);
+      var date = createDatetimeFromTimestamp(item.startTime.timestamp);
+      console.log(date);
       item.startTime = date;
       if (!(date.getMonth() in sortedByMonths)) {
         sortedByMonths[date.getMonth()] = [];
@@ -73,7 +81,7 @@
   function displayMonthlyRides(rides, month) {
     var prototype = getPrototype();
     prototype.find('.js-agg-month').text(MONTHS[month]);
-    prototype.find('.js-agg-price').text(roundToDecimals(getSumPrice(rides), 2).toString().replace('.', ','));
+    prototype.find('.js-agg-price').text(roundToDecimals((getSumPrice(rides) / 100), 2).toString().replace('.', ','));
 
     getRidesList().append(prototype);
 
@@ -89,22 +97,22 @@
 
   // renders a ride
   function renderRide(ride) {
-    if (ride.endTime) {
-      ride.endTime = new Date(ride.endTime);
+    if (ride.endTime.timestamp) {
+      ride.endTime = createDatetimeFromTimestamp(ride.endTime.timestamp);
     }
     var ui = getPrototypeItem();
 
     // confiure line
     var line = ui.find('.js-line');
     line.text(ride.line);
-    line.css('background-color', ride.color);
+    line.css('background-color', ride.lineColor);
 
     // configure date
-    ui.find('.js-date').text(ride.startTime.getDate() + '.' + ride.startTime.getMonth() + '.');
+    ui.find('.js-date').text(ride.startTime.getDate() + '.' + (ride.startTime.getMonth() + 1) + '.');
 
     // configure Start
     ui.find('.js-starttime').text(ride.startTime.getHours() + ':' + ride.startTime.getMinutes());
-    ui.find('.js-startstation').text(ride.fromStation);
+    ui.find('.js-startstation').text(ride.startStation);
 
     // configure End
     if(ride.endTime && ride.endStation) {
@@ -118,8 +126,8 @@
     }
 
     // configure price
-    if (ride.cost) {
-      ui.find('.js-rideprice').text(ride.cost.toString().replace('.', ','));
+    if (ride.price) {
+      ui.find('.js-rideprice').text((ride.price / 100).toString().replace('.', ','));
     }
 
     // display the correct right cell, according to a set end
@@ -135,7 +143,7 @@
   function getSumPrice(rides) {
     var price = 0;
     rides.forEach(function (ride) {
-      price += convert2Float(ride.cost);
+      price += convert2Float(ride.price);
     });
     return price;
   }
